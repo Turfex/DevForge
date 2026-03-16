@@ -57,26 +57,35 @@ const data = await res.json()
 
 const container = document.getElementById("products")
 
-data.forEach(p =>{
+data.forEach(p => {
 
-if(p.category !== cat) return
+    if(p.category !== cat) return
 
-const div = document.createElement("div")
-div.className = "product"
+    const div = document.createElement("div")
+    div.className = "product"
 
-div.innerHTML = `
-<img src="productsimages/${p.image}">
-<div class="product-info">
-<div class="product-name">${p.name}</div>
-<div class="product-id">${p.id}</div>
-<div class="product-price">${p.price}$</div>
-</div>
+    // === Nur klickbar, wenn Kategorie "rblxeh" ===
+    if(cat === "rblxeh"){
+        div.onclick = () => {
+            window.location = `product.html?id=${p.id}`
+        }
+        div.style.cursor = "pointer" // optional: zeigt Klickbarkeit
+    }
+
+    div.innerHTML = `
+    <img src="productsimages/${p.image}">
+    <div class="product-info">
+        <div class="product-name">${p.name}</div>
+        <div class="product-id">${p.id}</div>
+        <div class="product-price">
+            ${p.price}${cat === "rblxeh" ? "" : "$"}
+        </div>
+    </div>
 `
 
-container.appendChild(div)
+    container.appendChild(div)
 
 })
-
 }
 
 loadProducts()
